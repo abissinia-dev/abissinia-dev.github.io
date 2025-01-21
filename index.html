@@ -1,39 +1,430 @@
 <!DOCTYPE html>
-<html lang="it">
+<html lang="en" xmlns="http://www.w3.org/1999/html">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>COGLIOOONE</title>
-    <style>
-        body {
-            margin: 0;
-            padding: 0;
-            display: flex;
-            flex-direction: column;
-            justify-content: flex-start; 
-            align-items: center;
-            height: 100vh;
-            background-color: #121212; 
-            color: #ffffff; 
-            font-family: Arial, sans-serif;
-            text-transform: uppercase; 
-        }
-        h1 {
-            font-size: 2.5rem;
-            text-align: center;
-            margin: 1rem 0; 
-        }
-    </style>
+  <title>Accedi con Argo Software</title>
+
+  <!-- Required meta tags -->
+  <meta charset="utf-8">
+  <meta content="width=device-width, initial-scale=1.0, maximum-scale=10.0" name="viewport"/>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
+
+  <link href="https://www.portaleargo.it/assets/auth/images/favicon.ico" rel="shortcut icon" type="image/x-icon">
+
+  <meta name="author" content="Stefano Corallo / developer - argosoft.it ">
+  <meta name="keywords" content="Argo, registro elettronico, scuola, didattica a distanza, applicativi per la scuola">
+  <meta name="description" content="Argo, registro elettronico, didattica a distanza e altri applicativi per la gestione della scuola.">
+
+  <!-- Fonts and icons -->
+  <style>
+    .fa,.fab,.fad,.fal,.far,.fas {
+      -moz-osx-font-smoothing: grayscale;
+      -webkit-font-smoothing: antialiased;
+      display: inline-block;
+      font-style: normal;
+      font-variant: normal;
+      text-rendering: auto;
+      line-height: 1
+    }
+  </style>
+  <link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css"
+        as="style" onload="this.onload=null;this.rel='stylesheet';">
+  <!-- Risorsa replicata per i browser che non supportano il preload -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css">
+
+  <!-- Material Kit CSS -->
+  <link href="https://www.portaleargo.it/assets/auth/css/material-kit.min.css?v=2.0.6" rel="stylesheet"/>
+
+  <!-- SPID button CSS -->
+  <link href="https://www.portaleargo.it/assets/auth/css/spid-sp-access-button.min.css?v=1.6" rel="stylesheet" type="text/css"/>
+
+  <!--  Libreria popper del portale-->
+  <script type="text/javascript" src="https://www.portaleargo.it/portale/js/popper.js"></script>
+  <link rel="stylesheet" type="text/css" href="https://www.portaleargo.it/portale/stylesheet/style-popper.css">
+
+  <link href="https://www.portaleargo.it/assets/auth/css/video-js.css" rel="stylesheet" />
+
+  <!-- Custom CSS -->
+  <link href="https://www.portaleargo.it/assets/auth/css/style.css?v=2.19.6" media="all" rel="stylesheet"
+        type="text/css"/>
 </head>
-<body>
-    <h1>CIAO GIOVANBATTISTA MANNA!</h1>
 
-    <h1>Stai per iniziare a giocare alla caccia al tesoro fatta da me, Giacomo</h1>
-    <h1>Non è vero coglione sono checco</h1>
-    <h1>Ci saranno una serie di indizi che ti porteranno al premio finale.
-    Per ottenere il primo indizio chiedi a Marco Sicilia chi fuma.</h1>
-    <h1>(CHIEDIGLIELO SU WHATSAPP O TI MANDERÀ A FANCULO)</h1>
+<body class="bg-primary" style="height: 100vh">
 
+<div class="d-flex justify-content-center align-items-center" style="min-height:100%!important">
+
+    <!-- login form   -->
+    <div class="card-container px-3 px-md-5 text-center">
+      <div class="ml-auto mr-auto card card-raised">
+        <div class="progress" id="progress" style="display: none;">
+          <div aria-valuemax="100" aria-valuemin="0" aria-valuenow="0"
+               class="progress-bar progress-bar-indeterminate bg-info" role="progressbar">
+          </div>
+        </div>
+
+        <div class="card-title my-0">
+          <h3>didUP</h3>
+          <img class="img-fluid" src="https://cdnaws.portaleargo.it/portale/images/icone/didup.svg" alt="Logo Applicazione" style="max-width: 100px"/>
+        </div>
+
+<div class="card-body pt-0">
+  <div class="alert alert-danger" id="clockScrewWarning" role="alert" style="display:none;">
+    <div class="container">
+      Attenzione l'orologio del tuo sistema non &egrave; sincronizzato.
+      <ul class="container">
+        <li>Server Argo: <span id="clockScrewServerTime"></span></li>
+        <li>Tu: <span id="clockScrewClientTime"></span></li>
+      </ul>
+      <p class="container">Questo causa problemi in fase di autenticazione.</p>
+      <b class="container">&Egrave; necessario correggere sul tuo dispositivo la data e l'ora o il fuso orario.</b>
+    </div>
+  </div>
+
+  <form enctype="application/x-www-form-urlencoded" id="loginForm" method="POST" name="loginForm"
+        action="/auth/sso/login">
+    <input type="hidden" name="challenge" value="a56c63769bd14ea9bbacd95cd0b5ac02"/>
+    <input type="hidden" name="client_id" value="963ed11e-33b2-41b4-8911-f4f1907bd208"/>
+    <input type="hidden" name="prefill" value="false"/>
+
+
+    <div class="form-group bmd-form-group is-filled">
+      <label for="username" class="label bmd-label-static">
+        <i class="fa fa-user"></i>
+        Nome Utente
+      </label>
+
+      <input id="username"
+             type="text"
+             pattern="\s*[a-zA-Z0-9._-]+\s*|\s*[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}\s*"
+             class="form-control"
+             name="username" required autofocus
+             placeholder=""
+             
+             value="" autocomplete="off"
+             title="Assicurati che nel nome utente non siano presenti spazi vuoti."
+      >
+    </div>
+
+    <div class="form-group bmd-form-group is-filled">
+      <label for="password" class="label bmd-label-static">
+        <i class="fa fa-lock"></i>
+        Password
+      </label>
+      <div class="input-group">
+        <input autocomplete="off" class="form-control" id="password" name="password" required type="password">
+        <span class="fa fa-fw fa-eye reveal" style="width: 2.5rem"></span>
+      </div>
+
+      <a
+        href="https://www.portaleargo.it/auth/sso/passwordreset?login_challenge=a56c63769bd14ea9bbacd95cd0b5ac02&client_id=963ed11e-33b2-41b4-8911-f4f1907bd208"
+        class="label-right"
+      >
+        <u>Recupera la password</u>
+      </a>
+    </div>
+
+    <div class="form-check d-flex align-items-center clearfix">
+      <label for="remember_me" class="label form-check-label float-left">
+        <input
+          onclick="((checkbox) => { if(checkbox.checked && shouldShowModal($('#username')[0]?.value)){ $('#ssoModal').modal({'backdrop': 'static'}); } })(this);"
+          id="remember_me"
+          type="checkbox"
+          class="form-check-input"
+          name="remember_me"
+          value="true"
+        >Ricordami
+        <span class="form-check-sign">
+          <span class="check"></span>
+        </span>
+      </label>
+      <small class="text-left ml-3">Cliccando su "Ricordami" non dovrai più autenticarti su questo dispositivo per
+        accedere alle applicazioni.
+        <a href="#" onclick="$('#ssoModal').modal({'backdrop': 'static'});">
+          <u>Informativa SSO</u>
+        </a>
+      </small>
+    </div>
+
+    <div class="modal fade" id="ssoModal" tabindex="-1" role="dialog" aria-labelledby="ssoModalLabel" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h3 class="modal-title" id="ssoModalLabel">Informativa Single Sign On</h3>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <p class="text-justify">
+              Cliccando su &quot;Ricordami&quot; attiverai la modalit&agrave; SSO (Single Sign On): potrai effettuare l'accesso senza
+              autenticarti nuovamente, su questo dispositivo, per le prossime 24 ore o fintanto che non effettuerai manualmente il logout.
+              Se attivi la modalità SSO su un dispositivo condiviso, ricordati di effettuare il logout al termine della
+              tua sessione di lavoro, altrimenti chiunque abbia accesso al dispositivo potrebbe accedere automaticamente
+              alle applicazioni senza autorizzazione.
+            </p>
+          </div>
+          <div class="modal-footer justify-content-between">
+            <button type="button" class="btn btn-round btn-danger" onclick="$('#remember_me')[0].checked = false;" data-dismiss="modal">Annulla</button>
+            <button class="btn btn-round btn-success" data-dismiss="modal"
+                    onclick="$('#remember_me')[0].checked = true;setShowModalCookie($('#username')[0]?.value);"
+                    type="button">Conferma
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <button class="btn btn-block btn-round btn-primary mt-3" id="accediBtn" type="submit" name="login" value="true">Entra</button>
+  </form>
+
+  <form enctype="application/x-www-form-urlencoded" id="loginDenyForm" method="POST" name="loginForm"
+        action="/auth/sso/login">
+    <input type="hidden" name="challenge" value="a56c63769bd14ea9bbacd95cd0b5ac02"/>
+    <input type="hidden" name="client_id" value="963ed11e-33b2-41b4-8911-f4f1907bd208"/>
+
+    <button class="btn btn-block btn-round btn-danger mt-3" id="cancellaBtn" type="submit" name="login" value="false">Torna indietro</button>
+  </form>
+
+
+  <div class="mt-3"><b><i>OPPURE</i></b></div>
+
+  <form enctype="application/x-www-form-urlencoded" id="spidForm" method="POST" name="loginForm" action="/auth/eid-gateway/sso">
+    <input type="hidden" name="challenge" value="a56c63769bd14ea9bbacd95cd0b5ac02">
+    <input type="hidden" name="client_id" value="963ed11e-33b2-41b4-8911-f4f1907bd208">
+
+    <div class="d-sm-flex d-md-block d-lg-flex align-items-center">
+      <div class="col-sm-6 col-md-12 col-lg-6 px-0 pr-sm-3 pr-md-0 pr-lg-3 form-group bmd-form-group is-filled">
+        <label for="customer_code" class="label bmd-label-static">
+          <i class="fa fa-user"></i>
+          Codice Scuola
+        </label>
+
+        <input id="customer_code" type="text" class="form-control" name="customer_code"
+               required="" autofocus="" value="" autocomplete="off"
+               >
+      </div>
+
+      <div class="w-100">
+        <a href="#" type="button" onclick="document.getElementById('spidForm').submit()" class="italia-it-button italia-it-button-size-m button-spid d-flex" data-vertical-offset="-539"
+           spid-idp-button="#spid-idp-button" aria-haspopup="true" aria-expanded="false">
+              <span class="italia-it-button-icon">
+                <img onerror="this.src='https://www.portaleargo.it/assets/auth/images/spid-ico-circle-bb.png'; this.onerror=null;"
+                     src="https://www.portaleargo.it/assets/auth/images/spid-ico-circle-bb.png"
+                     alt="">
+              </span>
+          <span class="italia-it-button-text">SPID - CIE - EIDAS</span>
+        </a>
+      </div>
+    </div>
+<!--    <div id="spid-idp-button" class="spid-idp-button spid-idp-button-relative">-->
+<!--      <ul id="spid-idp-list-large" class="spid-idp-button-menu" aria-labelledby="spid-idp">-->
+<!--        -->
+<!--        <li class="spid-idp-button-link" data-idp="poste">-->
+<!--          <button class="idp-button-idp-logo" name="idp" value="poste" type="submit">-->
+<!--            <span class="spid-sr-only">Poste ID</span>-->
+<!--            <img class="spid-idp-button-logo"-->
+<!--                 onerror="this.src='https://www.portaleargo.it/assets/auth/images/spid-idp-posteid.png'; this.onerror=null;"-->
+<!--                 src="https://www.portaleargo.it/assets/auth/images/spid-idp-posteid.svg"-->
+<!--                 alt="Poste ID"/>-->
+<!--          </button>-->
+<!--        </li>-->
+<!--        -->
+<!--        <li class="spid-idp-button-link" data-idp="etna">-->
+<!--          <button class="idp-button-idp-logo" name="idp" value="etna" type="submit">-->
+<!--            <span class="spid-sr-only">Etna ID</span>-->
+<!--            <img class="spid-idp-button-logo"-->
+<!--                 onerror="this.src='https://www.portaleargo.it/assets/auth/images/spid-idp-etnaid.png'; this.onerror=null;"-->
+<!--                 src="https://www.portaleargo.it/assets/auth/images/spid-idp-etnaid.svg"-->
+<!--                 alt="Etna ID"/>-->
+<!--          </button>-->
+<!--        </li>-->
+<!--        -->
+<!--        <li class="spid-idp-button-link" data-idp="lepida">-->
+<!--          <button class="idp-button-idp-logo" name="idp" value="lepida" type="submit">-->
+<!--            <span class="spid-sr-only">Lepida ID</span>-->
+<!--            <img class="spid-idp-button-logo"-->
+<!--                 onerror="this.src='https://www.portaleargo.it/assets/auth/images/spid-idp-lepidaid.png'; this.onerror=null;"-->
+<!--                 src="https://www.portaleargo.it/assets/auth/images/spid-idp-lepidaid.svg"-->
+<!--                 alt="Lepida ID"/>-->
+<!--          </button>-->
+<!--        </li>-->
+<!--        -->
+<!--        <li class="spid-idp-button-link" data-idp="namirial">-->
+<!--          <button class="idp-button-idp-logo" name="idp" value="namirial" type="submit">-->
+<!--            <span class="spid-sr-only">Namirial ID</span>-->
+<!--            <img class="spid-idp-button-logo"-->
+<!--                 onerror="this.src='https://www.portaleargo.it/assets/auth/images/spid-idp-namirialid.png'; this.onerror=null;"-->
+<!--                 src="https://www.portaleargo.it/assets/auth/images/spid-idp-namirialid.svg"-->
+<!--                 alt="Namirial ID"/>-->
+<!--          </button>-->
+<!--        </li>-->
+<!--        -->
+<!--        <li class="spid-idp-button-link" data-idp="infocert">-->
+<!--          <button class="idp-button-idp-logo" name="idp" value="infocert" type="submit">-->
+<!--            <span class="spid-sr-only">Infocert ID</span>-->
+<!--            <img class="spid-idp-button-logo"-->
+<!--                 onerror="this.src='https://www.portaleargo.it/assets/auth/images/spid-idp-infocertid.png'; this.onerror=null;"-->
+<!--                 src="https://www.portaleargo.it/assets/auth/images/spid-idp-infocertid.svg"-->
+<!--                 alt="Infocert ID"/>-->
+<!--          </button>-->
+<!--        </li>-->
+<!--        -->
+<!--        <li class="spid-idp-button-link" data-idp="argostaging_test">-->
+<!--          <button class="idp-button-idp-logo" name="idp" value="argostaging_test" type="submit">-->
+<!--            <span class="spid-sr-only">Argostaging Test</span>-->
+<!--            <img class="spid-idp-button-logo"-->
+<!--                 onerror="this.src='https://www.portaleargo.it/assets/auth/images/spid-idp-argostaging.png'; this.onerror=null;"-->
+<!--                 src="https://www.portaleargo.it/assets/auth/images/spid-idp-argostaging.svg"-->
+<!--                 alt="Argostaging Test"/>-->
+<!--          </button>-->
+<!--        </li>-->
+<!--        -->
+<!--        <li class="spid-idp-button-link" data-idp="teamsystem">-->
+<!--          <button class="idp-button-idp-logo" name="idp" value="teamsystem" type="submit">-->
+<!--            <span class="spid-sr-only">TeamSystem ID</span>-->
+<!--            <img class="spid-idp-button-logo"-->
+<!--                 onerror="this.src='https://www.portaleargo.it/assets/auth/images/spid-idp-teamsystemid.png'; this.onerror=null;"-->
+<!--                 src="https://www.portaleargo.it/assets/auth/images/spid-idp-teamsystemid.svg"-->
+<!--                 alt="TeamSystem ID"/>-->
+<!--          </button>-->
+<!--        </li>-->
+<!--        -->
+<!--        <li class="spid-idp-button-link" data-idp="aruba">-->
+<!--          <button class="idp-button-idp-logo" name="idp" value="aruba" type="submit">-->
+<!--            <span class="spid-sr-only">Aruba ID</span>-->
+<!--            <img class="spid-idp-button-logo"-->
+<!--                 onerror="this.src='https://www.portaleargo.it/assets/auth/images/spid-idp-arubaid.png'; this.onerror=null;"-->
+<!--                 src="https://www.portaleargo.it/assets/auth/images/spid-idp-arubaid.svg"-->
+<!--                 alt="Aruba ID"/>-->
+<!--          </button>-->
+<!--        </li>-->
+<!--        -->
+<!--        <li class="spid-idp-button-link" data-idp="infocamere">-->
+<!--          <button class="idp-button-idp-logo" name="idp" value="infocamere" type="submit">-->
+<!--            <span class="spid-sr-only">InfoCamere</span>-->
+<!--            <img class="spid-idp-button-logo"-->
+<!--                 onerror="this.src='https://www.portaleargo.it/assets/auth/images/spid-idp-infocamereid.png'; this.onerror=null;"-->
+<!--                 src="https://www.portaleargo.it/assets/auth/images/spid-idp-infocamereid.svg"-->
+<!--                 alt="InfoCamere"/>-->
+<!--          </button>-->
+<!--        </li>-->
+<!--        -->
+<!--        <li class="spid-idp-button-link" data-idp="sielte">-->
+<!--          <button class="idp-button-idp-logo" name="idp" value="sielte" type="submit">-->
+<!--            <span class="spid-sr-only">Sielte ID</span>-->
+<!--            <img class="spid-idp-button-logo"-->
+<!--                 onerror="this.src='https://www.portaleargo.it/assets/auth/images/spid-idp-sielteid.png'; this.onerror=null;"-->
+<!--                 src="https://www.portaleargo.it/assets/auth/images/spid-idp-sielteid.svg"-->
+<!--                 alt="Sielte ID"/>-->
+<!--          </button>-->
+<!--        </li>-->
+<!--        -->
+<!--        <li class="spid-idp-button-link" data-idp="tim">-->
+<!--          <button class="idp-button-idp-logo" name="idp" value="tim" type="submit">-->
+<!--            <span class="spid-sr-only">Tim ID</span>-->
+<!--            <img class="spid-idp-button-logo"-->
+<!--                 onerror="this.src='https://www.portaleargo.it/assets/auth/images/spid-idp-timid.png'; this.onerror=null;"-->
+<!--                 src="https://www.portaleargo.it/assets/auth/images/spid-idp-timid.svg"-->
+<!--                 alt="Tim ID"/>-->
+<!--          </button>-->
+<!--        </li>-->
+<!--        -->
+<!--        <li class="spid-idp-button-link" data-idp="validator_staging">-->
+<!--          <button class="idp-button-idp-logo" name="idp" value="validator_staging" type="submit">-->
+<!--            <span class="spid-sr-only">Validator Argostaging</span>-->
+<!--            <img class="spid-idp-button-logo"-->
+<!--                 onerror="this.src='https://www.portaleargo.it/assets/auth/images/not-set.png'; this.onerror=null;"-->
+<!--                 src="https://www.portaleargo.it/assets/auth/images/not-set.svg"-->
+<!--                 alt="Validator Argostaging"/>-->
+<!--          </button>-->
+<!--        </li>-->
+<!--        -->
+<!--        <li class="spid-idp-button-link" data-idp="argodev_test">-->
+<!--          <button class="idp-button-idp-logo" name="idp" value="argodev_test" type="submit">-->
+<!--            <span class="spid-sr-only">Argodev Test</span>-->
+<!--            <img class="spid-idp-button-logo"-->
+<!--                 onerror="this.src='https://www.portaleargo.it/assets/auth/images/spid-idp-argodev.png'; this.onerror=null;"-->
+<!--                 src="https://www.portaleargo.it/assets/auth/images/spid-idp-argodev.svg"-->
+<!--                 alt="Argodev Test"/>-->
+<!--          </button>-->
+<!--        </li>-->
+<!--        -->
+<!--        <li class="spid-idp-button-link" data-idp="validator_local">-->
+<!--          <button class="idp-button-idp-logo" name="idp" value="validator_local" type="submit">-->
+<!--            <span class="spid-sr-only">Validator Local</span>-->
+<!--            <img class="spid-idp-button-logo"-->
+<!--                 onerror="this.src='https://www.portaleargo.it/assets/auth/images/not-set.png'; this.onerror=null;"-->
+<!--                 src="https://www.portaleargo.it/assets/auth/images/not-set.svg"-->
+<!--                 alt="Validator Local"/>-->
+<!--          </button>-->
+<!--        </li>-->
+<!--        -->
+<!--        <li class="spid-idp-button-link" data-idp="validator_dev">-->
+<!--          <button class="idp-button-idp-logo" name="idp" value="validator_dev" type="submit">-->
+<!--            <span class="spid-sr-only">Validator Argodev</span>-->
+<!--            <img class="spid-idp-button-logo"-->
+<!--                 onerror="this.src='https://www.portaleargo.it/assets/auth/images/not-set.png'; this.onerror=null;"-->
+<!--                 src="https://www.portaleargo.it/assets/auth/images/not-set.svg"-->
+<!--                 alt="Validator Argodev"/>-->
+<!--          </button>-->
+<!--        </li>-->
+<!--        -->
+<!--        <li class="spid-idp-button-link" data-idp="register">-->
+<!--          <button class="idp-button-idp-logo" name="idp" value="register" type="submit">-->
+<!--            <span class="spid-sr-only">SPIDItalia Register.it</span>-->
+<!--            <img class="spid-idp-button-logo"-->
+<!--                 onerror="this.src='https://www.portaleargo.it/assets/auth/images/spid-idp-spiditalia.png'; this.onerror=null;"-->
+<!--                 src="https://www.portaleargo.it/assets/auth/images/spid-idp-spiditalia.svg"-->
+<!--                 alt="SPIDItalia Register.it"/>-->
+<!--          </button>-->
+<!--        </li>-->
+<!--        -->
+<!--        <li><a class="dropdown-item" href="https://www.spid.gov.it">Maggiori informazioni</a></li>-->
+<!--        <li><a class="dropdown-item" href="https://www.spid.gov.it/richiedi-spid">Non hai SPID?</a></li>-->
+<!--        <li><a class="dropdown-item" href="https://www.spid.gov.it/serve-aiuto">Serve aiuto?</a></li>-->
+<!--      </ul>-->
+<!--    </div>-->
+  </form>
+</div>
+
+        <!-- footer -->
+        <div class="card-footer justify-content-between">
+          <a href="https://www.portaleargo.it">
+            <img class="img-fluid footer-logo" src="https://www.portaleargo.it/assets/auth/images/logo_argo.png" alt="Logo Argo">
+          </a>
+          <img class="footer-logo" src="https://www.portaleargo.it/assets/auth/images/rina.png" alt="Logo Rina">
+        </div>
+        <p>&copy; Tutti i diritti riservati</p>
+      </div>
+    </div>
+
+    <!-- promo card  -->
+    <div class="d-none d-lg-flex py-3 px-3 py-md-5 px-md-5 text-white align-items-center" style="width:60%">
+      <div class="embed-responsive embed-responsive-1by1">
+        <iframe
+          class="embed-responsive-item"
+          src="https://cdn.portaleargo.it/assets/promo/default/default.html">
+
+        </iframe>
+      </div>
+    </div>
+
+</div>
+
+<!--   Core JS Files   -->
+<script src="https://www.portaleargo.it/assets/auth/js/core/jquery.min.js" type="text/javascript"></script>
+<script src="https://www.portaleargo.it/assets/auth/js/core/popper.min.js" type="text/javascript"></script>
+<script src="https://www.portaleargo.it/assets/auth/js/core/bootstrap-material-design.min.js" type="text/javascript"></script>
+<!--  Plugin for the Sliders, full documentation here: http://refreshless.com/nouislider/ -->
+<script src="https://www.portaleargo.it/assets/auth/js/plugins/moment.min.js?v=2.29.1" type="text/javascript"></script>
+<script src="https://www.portaleargo.it/assets/auth/js/plugins/moment-locale-it.min.js?v=2.29.1" charset="UTF-8" type="text/javascript"></script>
+<script src="https://www.portaleargo.it/assets/auth/js/plugins/moment-timezone.min.js?v=0.5.32" type="text/javascript"></script>
+
+<!-- remotejs scripts -->
+<script src="https://www.portaleargo.it/assets/auth/js/main.js?v=2.19.6" type="text/javascript"></script>
+
+<script type="text/javascript">
+  window.start.init({ Palette: "palette3", Mode: "banner bottom", Theme: "wire", ButtonText: "Ok", Message: "Su questo sito e negli applicativi collegati utilizziamo alcuni cookies che sono necessari al funzionamento dei prodotti software. Per più informazioni su quali cookies potrebbero essere utilizzati negli applicativi o su questo portale clicca su 'Mostra Dettagli'.", LinkText: "Mostra Dettagli", Location:"https://www.argosoft.it/privacy.php", Time: "1", });
+</script>
 </body>
 </html>
-
