@@ -33,8 +33,26 @@ function mostraScenari() {
     .join("");
 }
 
+function mostraCurriculum() {
+  const curriculum = document.getElementById("curriculum");
+  curriculum.innerHTML = `
+    <div class="cv-section">
+      <h2>Curriculum Interattivo</h2>
+      <ul>
+        <li><strong>Nome:</strong> Mario Rossi</li>
+        <li><strong>Email:</strong> mario.rossi@example.com</li>
+        <li><strong>Competenze:</strong> HTML, CSS, JavaScript, React, Python</li>
+        <li><strong>Istruzione:</strong> Liceo Scientifico - 2025</li>
+        <li><strong>Esperienze:</strong> Sviluppo app scolastiche, progetti web</li>
+      </ul>
+      <p><a href="#" class="cv-download">Scarica CV in PDF</a></p>
+    </div>
+  `;
+}
+
 document.addEventListener("DOMContentLoaded", () => {
   mostraScenari();
+  mostraCurriculum();
 
   // Timeline Interattiva - Inizio
   const eventi = [
