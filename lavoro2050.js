@@ -35,4 +35,29 @@ function mostraScenari() {
 
 document.addEventListener("DOMContentLoaded", () => {
   mostraScenari();
+
+  // Timeline Interattiva - Inizio
+  const eventi = [
+    { anno: 1860, evento: "Lavoro minorile e rivoluzione industriale (Verga)" },
+    { anno: 1948, evento: "Nascita della Costituzione Italiana - Art. 1, 4, 41" },
+    { anno: 1949, evento: "Dichiarazione Universale dei Diritti Umani" },
+    { anno: 1984, evento: "Animal Farm di Orwell: lavoro e potere" },
+    { anno: 2000, evento: "Carta dei Diritti fondamentali dell’UE" },
+    { anno: 2025, evento: "Smart work e diritti digitali" }
+  ];
+
+  const timeline = document.getElementById("timeline");
+  if (timeline) {
+    timeline.innerHTML = eventi
+      .map(
+        (e) => `
+        <div class="evento">
+          <strong>${e.anno}</strong>
+          <p>${e.evento}</p>
+        </div>
+      `
+      )
+      .join("");
+  }
+  // Timeline Interattiva - Fine
 });
